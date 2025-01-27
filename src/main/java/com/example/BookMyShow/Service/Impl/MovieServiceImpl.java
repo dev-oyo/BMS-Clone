@@ -1,16 +1,14 @@
 package com.example.BookMyShow.Service.Impl;
 
 import com.example.BookMyShow.Dto.MovieDto;
-import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Movie;
-import com.example.BookMyShow.Entity.Show;
+import com.example.BookMyShow.Entity.Theatre;
 import com.example.BookMyShow.Exception.NotFoundException;
 import com.example.BookMyShow.Repository.*;
 import com.example.BookMyShow.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,29 +20,24 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private TheatreRepository theatreRepository;
+
     @Override
-    public List<Show> getALlShows(String movieId) {
-        List<Show> filteredShows = new ArrayList<>();
-        for (Show show : showRepository.findAll()) {
-            if (show.getMovie().getId().equals(movieId)) {
-                filteredShows.add(show);
-            }
-        }
-        return filteredShows;
+    public Movie addMovie(Movie movie, String theatre_id)
+    {
+        Theatre theatre = theatreRepository.findById(theatre_id).orElseThrow(() -> new NotFoundException("Theatre not found"));
+        movie.setTheatre(theatre);
+        return movieRepository.save(movie);
     }
 
     @Override
-    public Show addShow(String movieId, Show show) {
-        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new NotFoundException("Movie not found"));
-        show.setMovie(movie);
-        return showRepository.save(show);
+    public List<Movie> getAllMovies(String Id)
+    {
+        Theatre theatre = theatreRepository.findById(Id).orElseThrow(() -> new NotFoundException("Theatre not found"));
+        return theatre.getMovies();
     }
 
-    @Override
-    public List<Booking> getBookingsByShow(String showId) {
-        Show show = showRepository.findById(showId).orElseThrow(() -> new NotFoundException("Show not found"));
-        return show.getBookings();
-    }
     @Override
     public Movie convertToEntity(MovieDto movieDto)
     {

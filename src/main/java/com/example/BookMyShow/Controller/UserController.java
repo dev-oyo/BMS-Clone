@@ -29,17 +29,19 @@ public class UserController {
         return userServiceImpl.createUser(userEntity);
     }
 
-    // Add a Theatre
-    @PostMapping("/addTheatre")
-    public Theatre addTheatre(@RequestBody Theatre theatre)
+    // Recharge Wallet
+    @PutMapping("/rechargeWallet")
+    public Double updateWalletBalance(@RequestBody Double Amount,@RequestHeader("user_id") String Id)
     {
-        return userServiceImpl.addTheatre(theatre);
+        return userServiceImpl.updateWalletBalance(Id,Amount);
     }
 
-    // Get Theatres
-    @GetMapping("/getTheatres")
-    public List<Theatre> getTheatres()
+    // Get User Details
+    @GetMapping("/getDetails")
+    public UserEntity getDetails(@RequestHeader("user_id") String Id)
     {
-        return userServiceImpl.getTheatres();
+        return userServiceImpl.getDetails(Id);
     }
+
+
 }

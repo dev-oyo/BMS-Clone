@@ -10,11 +10,10 @@ import java.util.List;
 
 @Service
 public interface MovieService {
-    List<Show> getALlShows(String movieId);
 
-    Show addShow(String movieId, Show show);
+    Movie addMovie(Movie movie, String theatre_id);
 
-    List<Booking> getBookingsByShow(String showId);
+    List<Movie> getAllMovies(String Id);
 
     Movie convertToEntity(MovieDto movieDto);
 

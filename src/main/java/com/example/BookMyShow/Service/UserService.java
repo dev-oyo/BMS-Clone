@@ -13,9 +13,9 @@ public interface UserService {
 
     UserEntity createUser(UserEntity userEntity);
 
-    Theatre addTheatre(Theatre theatre);
+    Double updateWalletBalance(String id, Double amount);
 
-    List<Theatre> getTheatres();
+    UserEntity getDetails(String id);
 
     UserEntity convertToEntity(UserDto userDto);
 

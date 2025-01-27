@@ -1,9 +1,8 @@
 package com.example.BookMyShow.Service.Impl;
 
 import com.example.BookMyShow.Dto.UserDto;
-import com.example.BookMyShow.Entity.Theatre;
 import com.example.BookMyShow.Entity.UserEntity;
-import com.example.BookMyShow.Repository.TheatreRepository;
+import com.example.BookMyShow.Exception.NotFoundException;
 import com.example.BookMyShow.Repository.UserRepository;
 import com.example.BookMyShow.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private TheatreRepository theatreRepository;
 
     @Override
     public List<UserEntity> getAllUsers()
@@ -33,16 +29,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(users);
     }
 
+    // Get User Details
     @Override
-    public Theatre addTheatre(Theatre theatre)
-    {
-        return theatreRepository.save(theatre);
+    public UserEntity getDetails(String id) {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
     }
 
+    // Recharge Wallet
     @Override
-    public List<Theatre> getTheatres()
-    {
-        return theatreRepository.findAll();
+    public Double updateWalletBalance(String id, Double amount) {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
+        userEntity.setWalletBalance(userEntity.getWalletBalance()+amount);
+        userRepository.save(userEntity);
+        return userEntity.getWalletBalance();
     }
 
     @Override

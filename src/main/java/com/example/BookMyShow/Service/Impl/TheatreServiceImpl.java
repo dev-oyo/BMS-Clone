@@ -2,9 +2,7 @@ package com.example.BookMyShow.Service.Impl;
 
 import com.example.BookMyShow.Dto.TheatreDto;
 import com.example.BookMyShow.Entity.Booking;
-import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Entity.Theatre;
-import com.example.BookMyShow.Exception.NotFoundException;
 import com.example.BookMyShow.Repository.BookingRepository;
 import com.example.BookMyShow.Repository.MovieRepository;
 import com.example.BookMyShow.Repository.TheatreRepository;
@@ -27,20 +25,6 @@ public class TheatreServiceImpl implements TheatreService {
     @Autowired
     private TheatreRepository theatreRepository;
 
-    @Override
-    public Movie addMovie(Movie movie, String theatre_id)
-    {
-        Theatre theatre = theatreRepository.findById(theatre_id).orElseThrow(() -> new NotFoundException("Theatre not found"));
-        movie.setTheatre(theatre);
-        return movieRepository.save(movie);
-    }
-
-    @Override
-    public List<Movie> getAllMovies(String Id)
-    {
-        Theatre theatre = theatreRepository.findById(Id).orElseThrow(() -> new NotFoundException("Theatre not found"));
-        return theatre.getMovies();
-    }
 
     @Override
     public List<Booking> getAllBookings(String theatre_id)
@@ -55,6 +39,19 @@ public class TheatreServiceImpl implements TheatreService {
         }
         return filteredBookings;
     }
+
+    @Override
+    public Theatre addTheatre(Theatre theatre)
+    {
+        return theatreRepository.save(theatre);
+    }
+
+    @Override
+    public List<Theatre> getTheatres()
+    {
+        return theatreRepository.findAll();
+    }
+
     @Override
     public Theatre convertToEntity(TheatreDto theatreDto)
     {

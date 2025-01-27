@@ -2,6 +2,7 @@ package com.example.BookMyShow.Controller;
 
 import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Movie;
+import com.example.BookMyShow.Entity.Theatre;
 import com.example.BookMyShow.Service.Impl.TheatreServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +16,18 @@ public class TheatreController {
     @Autowired
     private TheatreServiceImpl theatreServiceImpl;
 
-    // Get Movies
-    @GetMapping("getMovies")
-    public List<Movie> getMovies(@RequestHeader("theatre_id") String Id)
+    // Add a Theatre
+    @PostMapping("/addTheatre")
+    public Theatre addTheatre(@RequestBody Theatre theatre)
     {
-        return theatreServiceImpl.getAllMovies(Id);
+        return theatreServiceImpl.addTheatre(theatre);
     }
 
-    // Add a Movie
-    @PostMapping("addMovie")
-    public Movie addMovie(@RequestBody Movie movie, @RequestHeader("theatre_id") String theatre_id)
+    // Get Theatres
+    @GetMapping("/getTheatres")
+    public List<Theatre> getTheatres()
     {
-        return theatreServiceImpl.addMovie(movie,theatre_id);
+        return theatreServiceImpl.getTheatres();
     }
 
     // Get All Bookings

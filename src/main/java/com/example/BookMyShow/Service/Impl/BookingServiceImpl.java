@@ -1,6 +1,6 @@
 package com.example.BookMyShow.Service.Impl;
 
-import com.example.BookMyShow.Dto.UserDto;
+import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Show;
 import com.example.BookMyShow.Entity.UserEntity;
@@ -65,21 +65,16 @@ public class BookingServiceImpl implements BookingService {
         return userEntity.getBookings();
     }
 
-    // Recharge Wallet
     @Override
-    public Double updateWalletBalance(String id, Double amount) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
-        userEntity.setWalletBalance(userEntity.getWalletBalance()+amount);
-        userRepository.save(userEntity);
-        return userEntity.getWalletBalance();
+    public Booking convertToEntity(BookingDto bookingDto)
+    {
+        return new Booking(bookingDto.getTickets(),bookingDto.getTotal_cost());
     }
 
-    // Get User Details
     @Override
-    public UserEntity getDetails(String id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
+    public BookingDto convertToDto(Booking booking)
+    {
+        return new BookingDto(booking.getTickets(), booking.getTotal_cost());
     }
-
-
 
 }

@@ -1,8 +1,7 @@
 package com.example.BookMyShow.Service;
 
-import com.example.BookMyShow.Dto.UserDto;
+import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Entity.Booking;
-import com.example.BookMyShow.Entity.UserEntity;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -14,10 +13,7 @@ public interface BookingService
     // Get bookings of a user
     List<Booking> getBookingsByUser(String Id);
 
-    // Recharge Wallet
-    Double updateWalletBalance(String id, Double amount);
+    Booking convertToEntity(BookingDto bookingDto);
 
-    // Get User Details
-    UserEntity getDetails(String id);
-
+    BookingDto convertToDto(Booking booking);
 }

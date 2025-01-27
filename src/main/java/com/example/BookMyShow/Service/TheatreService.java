@@ -11,9 +11,9 @@ import java.util.List;
 @Service
 public interface TheatreService {
 
-    Movie addMovie(Movie movie, String theatre_id);
+    Theatre addTheatre(Theatre theatre);
 
-    List<Movie> getAllMovies(String Id);
+    List<Theatre> getTheatres();
 
     List<Booking> getAllBookings(String theatre_id);
 
