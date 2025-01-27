@@ -1,5 +1,6 @@
 package com.example.BookMyShow.Service.Impl;
 
+import com.example.BookMyShow.Dto.TheatreDto;
 import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Entity.Theatre;
@@ -53,5 +54,16 @@ public class TheatreServiceImpl implements TheatreService {
             }
         }
         return filteredBookings;
+    }
+    @Override
+    public Theatre convertToEntity(TheatreDto theatreDto)
+    {
+        return new Theatre(theatreDto.getName(), theatreDto.getCity());
+    }
+
+    @Override
+    public TheatreDto convertToDto(Theatre theatre)
+    {
+        return new TheatreDto(theatre.getName(), theatre.getCity());
     }
 }

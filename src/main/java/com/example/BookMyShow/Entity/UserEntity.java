@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.List;
 
@@ -18,8 +19,13 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @NonNull
     private String name;
+
+    @NonNull
+    @Column(unique = true)
     private String email;
+
     private Double walletBalance ;
 
     @OneToMany(mappedBy = "userEntity")

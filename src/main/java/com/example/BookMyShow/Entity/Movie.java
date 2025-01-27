@@ -3,6 +3,7 @@ package com.example.BookMyShow.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalTime;
@@ -18,7 +19,9 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @NonNull
     private String name;
+    @NonNull
     private String duration;
 
     @ManyToOne

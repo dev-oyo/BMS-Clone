@@ -1,5 +1,6 @@
 package com.example.BookMyShow.Service.Impl;
 
+import com.example.BookMyShow.Dto.MovieDto;
 import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Entity.Show;
@@ -43,5 +44,16 @@ public class MovieServiceImpl implements MovieService {
     public List<Booking> getBookingsByShow(String showId) {
         Show show = showRepository.findById(showId).orElseThrow(() -> new NotFoundException("Show not found"));
         return show.getBookings();
+    }
+    @Override
+    public Movie convertToEntity(MovieDto movieDto)
+    {
+        return new Movie(movieDto.getName(), movieDto.getDuration());
+    }
+
+    @Override
+    public MovieDto convertToDto(Movie movie)
+    {
+        return new MovieDto(movie.getName(), movie.getDuration());
     }
 }

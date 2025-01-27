@@ -1,48 +1,45 @@
 package com.example.BookMyShow.Controller;
 
-import com.example.BookMyShow.Entity.Booking;
+import com.example.BookMyShow.Entity.Theatre;
 import com.example.BookMyShow.Entity.UserEntity;
 import com.example.BookMyShow.Service.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/admin")
 public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-    // Get User Details
-    @GetMapping("/getDetails")
-    public UserEntity getDetails(@RequestHeader("user_id") String Id)
+    // Get Users
+    @GetMapping("getUsers")
+    public List<UserEntity> getUsers()
     {
-        return userServiceImpl.getDetails(Id);
+        return userServiceImpl.getAllUsers();
     }
 
-    // Create a new booking for a user
-    @PostMapping("/createBooking")
-    public ResponseEntity<?> createBooking(
-            @RequestHeader("user_id") String user_id,
-            @RequestBody Booking booking,
-            @RequestHeader("show_id") String show_id)
+    // Create a new user
+    @PostMapping("/addUser")
+    public UserEntity createUser(@RequestBody UserEntity userEntity)
     {
-        return userServiceImpl.createBooking(user_id, booking.getTickets(),show_id);
+        return userServiceImpl.createUser(userEntity);
     }
 
-    // Get bookings for a user
-    @GetMapping("/getBookings")
-    public List<Booking> getBookingsByUser(@RequestHeader("user_id") String Id) {
-        return userServiceImpl.getBookingsByUser(Id);
+    // Add a Theatre
+    @PostMapping("/addTheatre")
+    public Theatre addTheatre(@RequestBody Theatre theatre)
+    {
+        return userServiceImpl.addTheatre(theatre);
     }
 
-    // Recharge Wallet
-    @PutMapping("/rechargeWallet")
-    public Double updateWalletBalance(@RequestBody Double Amount,@RequestHeader("user_id") String Id)
+    // Get Theatres
+    @GetMapping("/getTheatres")
+    public List<Theatre> getTheatres()
     {
-        return userServiceImpl.updateWalletBalance(Id,Amount);
+        return userServiceImpl.getTheatres();
     }
 }

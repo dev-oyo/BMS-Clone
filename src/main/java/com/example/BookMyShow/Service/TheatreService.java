@@ -1,7 +1,9 @@
 package com.example.BookMyShow.Service;
 
+import com.example.BookMyShow.Dto.TheatreDto;
 import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Movie;
+import com.example.BookMyShow.Entity.Theatre;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,4 +16,8 @@ public interface TheatreService {
     List<Movie> getAllMovies(String Id);
 
     List<Booking> getAllBookings(String theatre_id);
+
+    Theatre convertToEntity(TheatreDto TheatreDto);
+
+    TheatreDto convertToDto(Theatre theatre);
 }

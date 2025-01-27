@@ -1,21 +1,23 @@
 package com.example.BookMyShow.Service;
 
-import com.example.BookMyShow.Entity.Booking;
+import com.example.BookMyShow.Dto.UserDto;
+import com.example.BookMyShow.Entity.Theatre;
 import com.example.BookMyShow.Entity.UserEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface UserService
-{
-    ResponseEntity<?> createBooking(String Id, Long tickets, String show_id);
+@Service
+public interface UserService {
+    List<UserEntity> getAllUsers();
 
-    // Get bookings of a user
-    List<Booking> getBookingsByUser(String Id);
+    UserEntity createUser(UserEntity userEntity);
 
-    // Recharge Wallet
-    Double updateWalletBalance(String id, Double amount);
+    Theatre addTheatre(Theatre theatre);
 
-    // Get User Details
-    UserEntity getDetails(String id);
+    List<Theatre> getTheatres();
+
+    UserEntity convertToEntity(UserDto userDto);
+
+    UserDto convertToDto(UserEntity userEntity);
 }
