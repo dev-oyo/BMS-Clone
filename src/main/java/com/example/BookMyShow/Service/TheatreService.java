@@ -1,5 +1,6 @@
 package com.example.BookMyShow.Service;
 
+import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.TheatreDto;
 import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Movie;
@@ -11,11 +12,11 @@ import java.util.List;
 @Service
 public interface TheatreService {
 
-    Theatre addTheatre(Theatre theatre);
+    TheatreDto addTheatre(TheatreDto theatre) throws RuntimeException;
 
-    List<Theatre> getTheatres();
+    List<TheatreDto> getTheatres() throws RuntimeException;
 
-    List<Booking> getAllBookings(String theatre_id);
+    List<BookingDto> getAllBookings(String theatre_id) throws RuntimeException;
 
     Theatre convertToEntity(TheatreDto TheatreDto);
 

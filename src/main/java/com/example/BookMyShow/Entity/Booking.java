@@ -1,8 +1,10 @@
 package com.example.BookMyShow.Entity;
 
+import com.example.BookMyShow.Dto.BookingDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Table(name = "Bookings")
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Booking {
 
     @Id
@@ -18,7 +21,6 @@ public class Booking {
 
     @NonNull
     private Long tickets;
-    @NonNull
     private Double total_cost;
 
     @ManyToOne

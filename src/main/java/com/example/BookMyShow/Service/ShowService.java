@@ -1,10 +1,9 @@
 package com.example.BookMyShow.Service;
 
+import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.ShowDto;
-import com.example.BookMyShow.Dto.UserDto;
-import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Show;
-import com.example.BookMyShow.Entity.UserEntity;
+import com.example.BookMyShow.Exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +11,11 @@ import java.util.List;
 @Service
 public interface ShowService {
 
-    List<Show> getALlShows(String movieId);
+    List<ShowDto> getALlShows(String movieId) throws RuntimeException;
 
-    Show addShow(String movieId, Show show);
+    ShowDto addShow(String movieId, ShowDto show) throws NotFoundException, RuntimeException;
 
-    List<Booking> getBookingsByShow(String showId);
+    List<BookingDto> getBookingsByShow(String showId) throws RuntimeException;
 
     Show convertToEntity(ShowDto showDto);
 

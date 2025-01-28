@@ -1,11 +1,13 @@
 package com.example.BookMyShow.Service.Impl;
 
+import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.TheatreDto;
 import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Theatre;
 import com.example.BookMyShow.Repository.BookingRepository;
 import com.example.BookMyShow.Repository.MovieRepository;
 import com.example.BookMyShow.Repository.TheatreRepository;
+import com.example.BookMyShow.Service.BookingService;
 import com.example.BookMyShow.Service.TheatreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,36 +22,60 @@ public class TheatreServiceImpl implements TheatreService {
     private BookingRepository bookingRepository;
 
     @Autowired
-    private MovieRepository movieRepository;
-
-    @Autowired
     private TheatreRepository theatreRepository;
 
+    @Autowired
+    private BookingService bookingServiceImpl;
 
     @Override
-    public List<Booking> getAllBookings(String theatre_id)
+    public List<BookingDto> getAllBookings(String theatre_id) throws RuntimeException
     {
-        List<Booking> filteredBookings = new ArrayList<>();
-        for (Booking booking : bookingRepository.findAll())
+        try
         {
-            if (booking.getShow().getMovie().getTheatre().getId().equals(theatre_id))
-            {
-                filteredBookings.add(booking);
+            List<BookingDto> filteredBookings = new ArrayList<>();
+            for (Booking booking : bookingRepository.findAll()) {
+                if (booking.getShow().getMovie().getTheatre().getId().equals(theatre_id)) {
+                    filteredBookings.add(bookingServiceImpl.convertToDto(booking));
+                }
             }
+            return filteredBookings;
         }
-        return filteredBookings;
+        catch (Exception e)
+        {
+            throw new RuntimeException("Unknown error occurred!");
+        }
     }
 
     @Override
-    public Theatre addTheatre(Theatre theatre)
+    public TheatreDto addTheatre(TheatreDto theatreDto) throws RuntimeException
     {
-        return theatreRepository.save(theatre);
+        try
+        {
+            Theatre theatre = convertToEntity(theatreDto);
+            theatreRepository.save(theatre);
+            return convertToDto(theatre);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Unknown error occurred!");
+        }
     }
 
     @Override
-    public List<Theatre> getTheatres()
+    public List<TheatreDto> getTheatres() throws RuntimeException
     {
-        return theatreRepository.findAll();
+        try
+        {
+            List<TheatreDto> theatreDtoList = new ArrayList<>();
+            for (Theatre theatre : theatreRepository.findAll()) {
+                theatreDtoList.add(convertToDto(theatre));
+            }
+            return theatreDtoList;
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Unknown error occurred!");
+        }
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.example.BookMyShow.Controller;
 
-import com.example.BookMyShow.Entity.Booking;
-import com.example.BookMyShow.Service.Impl.BookingServiceImpl;
+import com.example.BookMyShow.Dto.BookingDto;
+import com.example.BookMyShow.Exception.BadReqException;
+import com.example.BookMyShow.Exception.NotFoundException;
+import com.example.BookMyShow.Service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,25 +11,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/booking")
 public class BookingController {
 
     @Autowired
-    private BookingServiceImpl bookingServiceImpl;
+    private BookingService bookingServiceImpl;
 
     // Create a new booking for a user
     @PostMapping("/createBooking")
     public ResponseEntity<?> createBooking(
-            @RequestHeader("user_id") String user_id,
-            @RequestBody Booking booking,
-            @RequestHeader("show_id") String show_id)
+            @RequestParam("user_id") String user_id,
+            @RequestBody BookingDto bookingDto,
+            @RequestParam("show_id") String show_id) throws NotFoundException, BadReqException, RuntimeException
     {
-        return bookingServiceImpl.createBooking(user_id, booking.getTickets(),show_id);
+        return bookingServiceImpl.createBooking(user_id, bookingDto,show_id);
     }
 
     // Get bookings for a user
     @GetMapping("/getBookings")
-    public List<Booking> getBookingsByUser(@RequestHeader("user_id") String Id) {
+    public List<BookingDto> getBookingsByUser(@RequestParam("user_id") String Id) throws NotFoundException, RuntimeException
+    {
         return bookingServiceImpl.getBookingsByUser(Id);
     }
 }

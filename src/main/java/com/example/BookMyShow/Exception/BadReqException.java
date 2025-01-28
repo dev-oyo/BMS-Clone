@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public class NotFoundException extends RuntimeException
+public class BadReqException extends RuntimeException
 {
-    public NotFoundException(String message)
+    public BadReqException(String message)
     {
         super(message);
     }
@@ -26,4 +26,3 @@ public class NotFoundException extends RuntimeException
         }
     }
 }
-

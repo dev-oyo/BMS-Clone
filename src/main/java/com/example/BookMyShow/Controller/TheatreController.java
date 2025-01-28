@@ -1,9 +1,10 @@
 package com.example.BookMyShow.Controller;
 
+import com.example.BookMyShow.Dto.BookingDto;
+import com.example.BookMyShow.Dto.TheatreDto;
 import com.example.BookMyShow.Entity.Booking;
-import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Entity.Theatre;
-import com.example.BookMyShow.Service.Impl.TheatreServiceImpl;
+import com.example.BookMyShow.Service.TheatreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,25 +15,25 @@ import java.util.List;
 public class TheatreController {
 
     @Autowired
-    private TheatreServiceImpl theatreServiceImpl;
+    private TheatreService theatreServiceImpl;
 
     // Add a Theatre
     @PostMapping("/addTheatre")
-    public Theatre addTheatre(@RequestBody Theatre theatre)
+    public TheatreDto addTheatre(@RequestBody TheatreDto theatre) throws RuntimeException
     {
         return theatreServiceImpl.addTheatre(theatre);
     }
 
     // Get Theatres
     @GetMapping("/getTheatres")
-    public List<Theatre> getTheatres()
+    public List<TheatreDto> getTheatres() throws RuntimeException
     {
         return theatreServiceImpl.getTheatres();
     }
 
-    // Get All Bookings
+    // Get All Bookings for a theatre
     @GetMapping("getBookings")
-    public List<Booking> getAllBookings(@RequestHeader("theatre_id") String theatre_id)
+    public List<BookingDto> getAllBookings(@RequestParam("theatre_id") String theatre_id) throws RuntimeException
     {
         return theatreServiceImpl.getAllBookings(theatre_id);
     }
