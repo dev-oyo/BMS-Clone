@@ -2,23 +2,20 @@ package com.example.BookMyShow.Service.Impl;
 
 import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Entity.Booking;
+import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Entity.Show;
 import com.example.BookMyShow.Entity.UserEntity;
 import com.example.BookMyShow.Exception.BadReqException;
 import com.example.BookMyShow.Exception.NotFoundException;
-import com.example.BookMyShow.Repository.BookingRepository;
-import com.example.BookMyShow.Repository.ShowRepository;
-import com.example.BookMyShow.Repository.UserRepository;
+import com.example.BookMyShow.Repository.*;
+import com.example.BookMyShow.Response.BookingResponse;
 import com.example.BookMyShow.Service.BookingService;
 import jakarta.transaction.Transactional;
-import org.apache.coyote.BadRequestException;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.management.RuntimeErrorException;
 import java.util.*;
 
 @Service
@@ -33,6 +30,12 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private ShowRepository showRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
+    private TheatreRepository theatreRepository;
 
     // Create new booking
     @Override
@@ -78,22 +81,71 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    // Get bookings of a user
+    // Get bookings
     @Override
-    public List<BookingDto> getBookingsByUser(String Id) throws NotFoundException, RuntimeException{
+    public List<BookingResponse> getBookingsByUser(Map<String,String> allParams) throws NotFoundException, RuntimeException, BadReqException{
         try
         {
-            UserEntity userEntity = userRepository.findById(Id)
-                    .orElseThrow(() -> new NotFoundException("User not found!"));
-            List<BookingDto> bookingDtoList = new ArrayList<>();
-            for (Booking booking : userEntity.getBookings())
+            List<BookingResponse> bookingResponseList = new ArrayList<>();
+            if(allParams.get("user_id")!=null)
             {
-                bookingDtoList.add(convertToDto(booking));
+                String userId=allParams.get("user_id");
+                UserEntity userEntity = userRepository.findById(userId)
+                        .orElseThrow(() -> new NotFoundException("User not found!"));
+                for (Booking booking : userEntity.getBookings())
+                {
+                    bookingResponseList.add(convertToResponse(booking));
+                }
+                return bookingResponseList;
             }
-            return bookingDtoList;
+            else if (allParams.get("show_id")!=null)
+            {
+                String showId=allParams.get("show_id");
+                Show show = showRepository.findById(showId)
+                        .orElseThrow(() -> new NotFoundException("Show not found"));
+                for (Booking booking : show.getBookings())
+                {
+                    bookingResponseList.add(convertToResponse(booking));
+                }
+                return bookingResponseList;
+            }
+            else if (allParams.get("movie_id")!=null)
+            {
+                String movieId=allParams.get("movie_id");
+                movieRepository.findById(movieId).orElseThrow(() -> new NotFoundException("Movie not found"));
+                for (Booking booking : bookingRepository.findAll())
+                {
+                    if(booking.getShow().getMovie().getId().equals(movieId))
+                    {
+                        bookingResponseList.add(convertToResponse(booking));
+                    }
+                }
+                return bookingResponseList;
+            }
+            else if (allParams.get("theatre_id")!=null)
+            {
+                String theatreId=allParams.get("theatre_id");
+                theatreRepository.findById(theatreId).orElseThrow(() -> new NotFoundException("Theatre not found"));
+                for (Booking booking : bookingRepository.findAll())
+                {
+                    if (booking.getShow().getMovie().getTheatre().getId().equals(theatreId))
+                    {
+                        bookingResponseList.add(convertToResponse(booking));
+                    }
+                }
+                return bookingResponseList;
+            }
+            else
+            {
+                throw new BadReqException("Invalid Input");
+            }
         }
         catch (NotFoundException e) {
             throw new NotFoundException(e.getMessage());
+        }
+        catch (BadReqException e)
+        {
+            throw new BadReqException(e.getMessage());
         }
         catch (Exception e) {
             throw new RuntimeException("Unknown error occurred!");
@@ -104,6 +156,18 @@ public class BookingServiceImpl implements BookingService {
     public BookingDto convertToDto(Booking booking)
     {
         return new BookingDto(booking.getTickets(), booking.getTotal_cost());
+    }
+
+    @Override
+    public BookingResponse convertToResponse(Booking booking) {
+        BookingResponse bookingResponse=new BookingResponse();
+        bookingResponse.setTickets(booking.getTickets());
+        bookingResponse.setTotalCost(booking.getTotal_cost());
+        bookingResponse.setShowDate(booking.getShow().getDate());
+        bookingResponse.setShowTime(booking.getShow().getTime());
+        bookingResponse.setMovieName(booking.getShow().getMovie().getName());
+        bookingResponse.setTheatreName(booking.getShow().getMovie().getTheatre().getName());
+        return bookingResponse;
     }
 
 }

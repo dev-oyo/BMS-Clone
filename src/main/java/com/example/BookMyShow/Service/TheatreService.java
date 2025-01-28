@@ -16,8 +16,6 @@ public interface TheatreService {
 
     List<TheatreDto> getTheatres() throws RuntimeException;
 
-    List<BookingDto> getAllBookings(String theatre_id) throws RuntimeException;
-
     Theatre convertToEntity(TheatreDto TheatreDto);
 
     TheatreDto convertToDto(Theatre theatre);

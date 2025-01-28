@@ -3,12 +3,14 @@ package com.example.BookMyShow.Controller;
 import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Exception.BadReqException;
 import com.example.BookMyShow.Exception.NotFoundException;
+import com.example.BookMyShow.Response.BookingResponse;
 import com.example.BookMyShow.Service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/booking")
@@ -27,10 +29,11 @@ public class BookingController {
         return bookingServiceImpl.createBooking(user_id, bookingDto,show_id);
     }
 
-    // Get bookings for a user
+    // Get bookings
     @GetMapping("/getBookings")
-    public List<BookingDto> getBookingsByUser(@RequestParam("user_id") String Id) throws NotFoundException, RuntimeException
+    public List<BookingResponse> getBookingsByUser(@RequestParam Map<String,String> allParams)
+            throws NotFoundException, RuntimeException
     {
-        return bookingServiceImpl.getBookingsByUser(Id);
+        return bookingServiceImpl.getBookingsByUser(allParams);
     }
 }

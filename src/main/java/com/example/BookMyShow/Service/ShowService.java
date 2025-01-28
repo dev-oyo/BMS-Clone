@@ -15,8 +15,6 @@ public interface ShowService {
 
     ShowDto addShow(String movieId, ShowDto show) throws NotFoundException, RuntimeException;
 
-    List<BookingDto> getBookingsByShow(String showId) throws RuntimeException;
-
     Show convertToEntity(ShowDto showDto);
 
     ShowDto convertToDto(Show show);

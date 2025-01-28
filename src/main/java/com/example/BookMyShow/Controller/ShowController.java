@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/show")
+@RestController
+@RequestMapping("/show")
 public class ShowController {
 
     @Autowired
@@ -28,12 +29,5 @@ public class ShowController {
     public ShowDto addShow(@RequestParam("movie_id") String movie_id,@RequestBody ShowDto show) throws NotFoundException, RuntimeException
     {
         return showServiceImpl.addShow(movie_id,show);
-    }
-
-    // Get Bookings for a show
-    @GetMapping("/getBookings")
-    public List<BookingDto> getBookingsByShow(@RequestParam("show_id") String show_id) throws RuntimeException
-    {
-        return showServiceImpl.getBookingsByShow(show_id);
     }
 }

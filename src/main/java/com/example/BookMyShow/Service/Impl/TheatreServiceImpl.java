@@ -28,25 +28,6 @@ public class TheatreServiceImpl implements TheatreService {
     private BookingService bookingServiceImpl;
 
     @Override
-    public List<BookingDto> getAllBookings(String theatre_id) throws RuntimeException
-    {
-        try
-        {
-            List<BookingDto> filteredBookings = new ArrayList<>();
-            for (Booking booking : bookingRepository.findAll()) {
-                if (booking.getShow().getMovie().getTheatre().getId().equals(theatre_id)) {
-                    filteredBookings.add(bookingServiceImpl.convertToDto(booking));
-                }
-            }
-            return filteredBookings;
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException("Unknown error occurred!");
-        }
-    }
-
-    @Override
     public TheatreDto addTheatre(TheatreDto theatreDto) throws RuntimeException
     {
         try

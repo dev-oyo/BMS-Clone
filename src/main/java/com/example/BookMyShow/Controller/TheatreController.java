@@ -30,11 +30,4 @@ public class TheatreController {
     {
         return theatreServiceImpl.getTheatres();
     }
-
-    // Get All Bookings for a theatre
-    @GetMapping("getBookings")
-    public List<BookingDto> getAllBookings(@RequestParam("theatre_id") String theatre_id) throws RuntimeException
-    {
-        return theatreServiceImpl.getAllBookings(theatre_id);
-    }
 }

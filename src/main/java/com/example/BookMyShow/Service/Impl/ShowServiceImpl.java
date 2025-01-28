@@ -72,26 +72,6 @@ public class ShowServiceImpl implements ShowService {
     }
 
     @Override
-    public List<BookingDto> getBookingsByShow(String showId) throws RuntimeException
-    {
-        try
-        {
-            Show show = showRepository.findById(showId)
-                    .orElseThrow(() -> new NotFoundException("Show not found"));
-            List<BookingDto> bookingDtoList = new ArrayList<>();
-            for (Booking booking : show.getBookings())
-            {
-                bookingDtoList.add(bookingServiceImpl.convertToDto(booking));
-            }
-            return bookingDtoList;
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException("Unknown error occurred!");
-        }
-    }
-
-    @Override
     public Show convertToEntity(ShowDto showDto)
     {
         return new Show(showDto.getCost(), showDto.getDate(), showDto.getTime(),showDto.getCapacity());

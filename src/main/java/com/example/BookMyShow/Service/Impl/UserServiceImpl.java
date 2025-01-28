@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
     // Recharge Wallet
     @Override
-    public Double updateWalletBalance(String id, Double amount) throws NotFoundException, RuntimeException, BadReqException
+    public Double updateWalletBalance(String id, Double amount) throws  RuntimeException
     {
         try {
             if(amount<=0)

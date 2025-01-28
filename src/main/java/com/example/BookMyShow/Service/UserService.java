@@ -15,7 +15,7 @@ public interface UserService {
 
     UserDto createUser(UserDto userEntity) throws RuntimeException;
 
-    Double updateWalletBalance(String id, Double amount) throws NotFoundException, RuntimeException, BadReqException;
+    Double updateWalletBalance(String id, Double amount) throws RuntimeException;
 
     UserDto getDetails(String id) throws NotFoundException, RuntimeException;
 
