@@ -1,12 +1,8 @@
 package com.example.BookMyShow.Controller;
 
-import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.MovieDto;
-import com.example.BookMyShow.Entity.Booking;
-import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Exception.NotFoundException;
 import com.example.BookMyShow.Service.MovieService;
-import com.example.BookMyShow.Service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

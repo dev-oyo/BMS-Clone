@@ -4,6 +4,7 @@ import com.example.BookMyShow.Dto.UserDto;
 import com.example.BookMyShow.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -16,21 +17,21 @@ public class UserController {
 
     // Get Users
     @GetMapping("getUsers")
-    public List<UserDto> getUsers() throws RuntimeException
+    public Mono<List<UserDto>> getUsers() throws RuntimeException
     {
         return userServiceImpl.getAllUsers();
     }
 
     // Create a new user
     @PostMapping("/addUser")
-    public UserDto createUser(@RequestBody UserDto userEntity) throws RuntimeException
+    public Mono<UserDto> createUser(@RequestBody UserDto userEntity) throws RuntimeException
     {
         return userServiceImpl.createUser(userEntity);
     }
 
     // Recharge Wallet
     @PutMapping("/rechargeWallet")
-    public Double updateWalletBalance(@RequestHeader("Amount") Double Amount,@RequestParam("user_id") String Id)
+    public Mono<UserDto> updateWalletBalance(@RequestHeader("Amount") Double Amount, @RequestParam("user_id") String Id)
             throws RuntimeException
     {
         return userServiceImpl.updateWalletBalance(Id,Amount);
@@ -38,7 +39,7 @@ public class UserController {
 
     // Get User Details
     @GetMapping("/getDetails")
-    public UserDto getDetails(@RequestParam("user_id") String Id)
+    public Mono<UserDto> getDetails(@RequestParam("user_id") String Id)
             throws RuntimeException
     {
         return userServiceImpl.getDetails(Id);

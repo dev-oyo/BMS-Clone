@@ -6,9 +6,9 @@ import com.example.BookMyShow.Exception.BadReqException;
 import com.example.BookMyShow.Exception.NotFoundException;
 import com.example.BookMyShow.Repository.UserRepository;
 import com.example.BookMyShow.Service.UserService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +20,15 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public List<UserDto> getAllUsers() throws RuntimeException
-    {
+    public Mono<List<UserDto>> getAllUsers() throws RuntimeException {
+        List<UserDto> userDtoList=new ArrayList<>();
         try
         {
-            List<UserDto> userDtoList = new ArrayList<>();
-            for (UserEntity user : userRepository.findAll()) {
-                userDtoList.add(convertToDto(user));
+            for(UserEntity userEntity : userRepository.findAll())
+            {
+                    userDtoList.add(convertToDto(userEntity));
             }
-            return userDtoList;
+            return Mono.just(userDtoList);
         }
         catch (Exception e)
         {
@@ -37,14 +37,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) throws RuntimeException
-    {
+    public Mono<UserDto> createUser(UserDto userDto) {
+
         try
         {
             UserEntity user = convertToEntity(userDto);
             UserEntity newUser = new UserEntity(user.getName(), user.getEmail(), user.getWalletBalance());
             userRepository.save(newUser);
-            return convertToDto(newUser);
+            return Mono.just(convertToDto(newUser));
         }
         catch (Exception e)
         {
@@ -52,14 +52,23 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
+//        return Mono.just(userDto)
+//                .map(this::convertToEntity)
+//                .flatMap(user -> {
+//                    UserEntity newUser = new UserEntity(user.getName(), user.getEmail(), user.getWalletBalance());
+//                    return userRepository.save(newUser);
+//                })
+//                .map(this::convertToDto);
+
     // Get User Details
     @Override
-    public UserDto getDetails(String id) throws RuntimeException, NotFoundException
+    public Mono<UserDto> getDetails(String userId)
     {
         try
         {
-            return convertToDto(userRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("User not found!")));
+            return Mono.just(convertToDto(userRepository.findById(userId)
+                    .orElseThrow(()->new NotFoundException("User not found"))));
         }
         catch (NotFoundException e)
         {
@@ -73,41 +82,25 @@ public class UserServiceImpl implements UserService {
 
     // Recharge Wallet
     @Override
-    public Double updateWalletBalance(String id, Double amount) throws  RuntimeException
+    public Mono<UserDto> updateWalletBalance(String userId, Double amount) throws  RuntimeException
     {
-        try {
-            if(amount<=0)
-                throw new BadReqException("Amount can't be negative!");
-            UserEntity userEntity = userRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("User not found!"));
-            userEntity.setWalletBalance(userEntity.getWalletBalance() + amount);
-            userRepository.save(userEntity);
-            return userEntity.getWalletBalance();
-        }
-        catch (NotFoundException e)
-        {
-            throw new NotFoundException(e.getMessage());
-        }
-        catch(BadReqException e)
-        {
-            throw new BadReqException(e.getMessage());
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException("Unknown Error occurred!");
-        }
+        if(amount<=0)
+            throw new BadReqException("Amount can't be negative!");
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(()->new NotFoundException("User not found"));
+        userEntity.setWalletBalance(userEntity.getWalletBalance() + amount);
+        userRepository.save(userEntity);
+        return Mono.just(convertToDto(userEntity));
     }
 
     @Override
-    public UserEntity convertToEntity(UserDto userDto)
-    {
+    public UserEntity convertToEntity(UserDto userDto) {
         return new UserEntity(userDto.getName(), userDto.getEmail(), userDto.getWalletBalance());
     }
 
     @Override
-    public UserDto convertToDto(UserEntity userEntity)
-    {
-        return new UserDto(userEntity.getName(), userEntity.getEmail(),userEntity.getWalletBalance());
+    public UserDto convertToDto(UserEntity userEntity) {
+        return new UserDto(userEntity.getName(), userEntity.getEmail(), userEntity.getWalletBalance());
     }
 
 }

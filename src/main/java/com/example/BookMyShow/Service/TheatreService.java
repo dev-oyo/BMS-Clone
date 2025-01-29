@@ -1,9 +1,6 @@
 package com.example.BookMyShow.Service;
 
-import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.TheatreDto;
-import com.example.BookMyShow.Entity.Booking;
-import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Entity.Theatre;
 import org.springframework.stereotype.Service;
 

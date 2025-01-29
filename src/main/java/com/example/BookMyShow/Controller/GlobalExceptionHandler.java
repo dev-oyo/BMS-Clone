@@ -2,7 +2,6 @@ package com.example.BookMyShow.Controller;
 
 import com.example.BookMyShow.Exception.BadReqException;
 import com.example.BookMyShow.Exception.NotFoundException;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

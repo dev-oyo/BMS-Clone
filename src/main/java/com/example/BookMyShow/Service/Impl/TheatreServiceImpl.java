@@ -1,11 +1,8 @@
 package com.example.BookMyShow.Service.Impl;
 
-import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.TheatreDto;
-import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Theatre;
 import com.example.BookMyShow.Repository.BookingRepository;
-import com.example.BookMyShow.Repository.MovieRepository;
 import com.example.BookMyShow.Repository.TheatreRepository;
 import com.example.BookMyShow.Service.BookingService;
 import com.example.BookMyShow.Service.TheatreService;

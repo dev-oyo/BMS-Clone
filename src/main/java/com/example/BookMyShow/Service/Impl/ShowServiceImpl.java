@@ -1,14 +1,11 @@
 package com.example.BookMyShow.Service.Impl;
 
-import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.ShowDto;
-import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Entity.Show;
 import com.example.BookMyShow.Exception.NotFoundException;
 import com.example.BookMyShow.Repository.MovieRepository;
 import com.example.BookMyShow.Repository.ShowRepository;
-import com.example.BookMyShow.Service.BookingService;
 import com.example.BookMyShow.Service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +21,6 @@ public class ShowServiceImpl implements ShowService {
 
     @Autowired
     private MovieRepository movieRepository;
-
-    @Autowired
-    private BookingService bookingServiceImpl;
 
     @Override
     public ShowDto addShow(String movieId, ShowDto showDto) throws NotFoundException, RuntimeException

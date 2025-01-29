@@ -1,9 +1,7 @@
 package com.example.BookMyShow.Service;
 
 import com.example.BookMyShow.Dto.MovieDto;
-import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Movie;
-import com.example.BookMyShow.Entity.Show;
 import com.example.BookMyShow.Exception.NotFoundException;
 import org.springframework.stereotype.Service;
 

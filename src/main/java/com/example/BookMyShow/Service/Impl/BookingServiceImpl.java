@@ -2,7 +2,6 @@ package com.example.BookMyShow.Service.Impl;
 
 import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Entity.Booking;
-import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Entity.Show;
 import com.example.BookMyShow.Entity.UserEntity;
 import com.example.BookMyShow.Exception.BadReqException;
@@ -16,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional

@@ -1,13 +1,11 @@
 package com.example.BookMyShow.Service.Impl;
 
-import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.MovieDto;
-import com.example.BookMyShow.Entity.Booking;
 import com.example.BookMyShow.Entity.Movie;
 import com.example.BookMyShow.Entity.Theatre;
-import com.example.BookMyShow.Exception.BadReqException;
 import com.example.BookMyShow.Exception.NotFoundException;
-import com.example.BookMyShow.Repository.*;
+import com.example.BookMyShow.Repository.MovieRepository;
+import com.example.BookMyShow.Repository.TheatreRepository;
 import com.example.BookMyShow.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +15,6 @@ import java.util.List;
 
 @Service
 public class MovieServiceImpl implements MovieService {
-
-    @Autowired
-    private ShowRepository showRepository;
 
     @Autowired
     private MovieRepository movieRepository;

@@ -1,9 +1,6 @@
 package com.example.BookMyShow.Controller;
 
-import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.TheatreDto;
-import com.example.BookMyShow.Entity.Booking;
-import com.example.BookMyShow.Entity.Theatre;
 import com.example.BookMyShow.Service.TheatreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,5 @@
 package com.example.BookMyShow.Service;
 
-import com.example.BookMyShow.Dto.BookingDto;
 import com.example.BookMyShow.Dto.ShowDto;
 import com.example.BookMyShow.Entity.Show;
 import com.example.BookMyShow.Exception.NotFoundException;
