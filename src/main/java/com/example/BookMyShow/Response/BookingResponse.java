@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class BookingResponse
-{
+public class BookingResponse {
     private Long tickets;
     private String showTime;
     private String showDate;

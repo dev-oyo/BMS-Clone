@@ -1,6 +1,5 @@
 package com.example.BookMyShow.Entity;
 
-import com.example.BookMyShow.Dto.BookingDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -33,8 +32,7 @@ public class Booking {
     private Show show;
 
 
-    public Booking(UserEntity userEntity, Long tickets, Show show)
-    {
+    public Booking(UserEntity userEntity, Long tickets, Show show) {
         this.userEntity=userEntity;
         this.tickets=tickets;
         this.show=show;

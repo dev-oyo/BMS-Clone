@@ -28,5 +28,4 @@ public class Theatre {
     @OneToMany(mappedBy = "theatre")
     @JsonIgnore
     private List<Movie> movies;
-
 }

@@ -6,7 +6,7 @@ import com.example.BookMyShow.Exception.BadReqException;
 import com.example.BookMyShow.Exception.NotFoundException;
 import com.example.BookMyShow.Repository.UserRepository;
 import com.example.BookMyShow.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -14,67 +14,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    // Get all users
     @Override
     public Mono<List<UserDto>> getAllUsers() throws RuntimeException {
         List<UserDto> userDtoList=new ArrayList<>();
-        try
-        {
-            for(UserEntity userEntity : userRepository.findAll())
-            {
+        try {
+            for(UserEntity userEntity : userRepository.findAll()) {
                     userDtoList.add(convertToDto(userEntity));
             }
             return Mono.just(userDtoList);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException("Unknown Error occurred!");
         }
     }
 
+    // Create User
     @Override
     public Mono<UserDto> createUser(UserDto userDto) {
-
-        try
-        {
+        try {
             UserEntity user = convertToEntity(userDto);
             UserEntity newUser = new UserEntity(user.getName(), user.getEmail(), user.getWalletBalance());
             userRepository.save(newUser);
             return Mono.just(convertToDto(newUser));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException("Unknown Error occurred!");
         }
     }
 
     // Get User Details
     @Override
-    public Mono<UserDto> getDetails(String userId)
-    {
-        try
-        {
+    public Mono<UserDto> getDetails(String userId) {
+        try {
             return Mono.just(convertToDto(userRepository.findById(userId)
                     .orElseThrow(()->new NotFoundException("User not found"))));
-        }
-        catch (NotFoundException e)
-        {
+        } catch (NotFoundException e) {
             throw new NotFoundException(e.getMessage());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException("Unknown Error occurred!");
         }
     }
 
     // Recharge Wallet
     @Override
-    public Mono<UserDto> updateWalletBalance(String userId, Double amount) throws  RuntimeException
-    {
+    public Mono<UserDto> updateWalletBalance(String userId, Double amount) throws  RuntimeException {
         if(amount<=0)
             throw new BadReqException("Amount can't be negative!");
         UserEntity userEntity = userRepository.findById(userId)
@@ -93,6 +80,4 @@ public class UserServiceImpl implements UserService {
     public UserDto convertToDto(UserEntity userEntity) {
         return new UserDto(userEntity.getName(), userEntity.getEmail(), userEntity.getWalletBalance());
     }
-
 }
-

@@ -7,73 +7,58 @@ import com.example.BookMyShow.Exception.NotFoundException;
 import com.example.BookMyShow.Repository.MovieRepository;
 import com.example.BookMyShow.Repository.ShowRepository;
 import com.example.BookMyShow.Service.ShowService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ShowServiceImpl implements ShowService {
 
-    @Autowired
-    private ShowRepository showRepository;
+    private final ShowRepository showRepository;
+    private final MovieRepository movieRepository;
 
-    @Autowired
-    private MovieRepository movieRepository;
-
-    @Override
-    public ShowDto addShow(String movieId, ShowDto showDto) throws NotFoundException, RuntimeException
-    {
-        try
-        {
+    // Add show
+    public ShowDto addShow(String movieId, ShowDto showDto) throws RuntimeException {
+        try {
             Show show = convertToEntity(showDto);
             Movie movie = movieRepository.findById(movieId)
                     .orElseThrow(() -> new NotFoundException("Movie not found"));
             show.setMovie(movie);
             showRepository.save(show);
             return convertToDto(show);
-        }
-        catch (NotFoundException e)
-        {
+        } catch (NotFoundException e) {
             throw new NotFoundException(e.getMessage());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException("Unknown error occurred!");
         }
     }
 
+    // Get all shows for a movie
     @Override
-    public List<ShowDto> getALlShows(String movieId) throws RuntimeException
-    {
-        try
-        {
+    public List<ShowDto> getALlShows(String movieId) throws RuntimeException {
+        try {
             List<ShowDto> filteredShows = new ArrayList<>();
-            for (Show show : showRepository.findAll())
-            {
-                if (show.getMovie().getId().equals(movieId))
-                {
+            for (Show show : showRepository.findAll()) {
+                if (show.getMovie().getId().equals(movieId)) {
                     filteredShows.add(convertToDto(show));
                 }
             }
             return filteredShows;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException("Unknown error occurred!");
         }
     }
 
     @Override
-    public Show convertToEntity(ShowDto showDto)
-    {
+    public Show convertToEntity(ShowDto showDto) {
         return new Show(showDto.getCost(), showDto.getDate(), showDto.getTime(),showDto.getCapacity());
     }
 
     @Override
-    public ShowDto convertToDto(Show show)
-    {
+    public ShowDto convertToDto(Show show) {
         return new ShowDto(show.getCost(), show.getDate(), show.getTime(),show.getCapacity());
     }
 }

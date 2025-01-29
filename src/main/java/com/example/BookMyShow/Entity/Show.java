@@ -36,5 +36,4 @@ public class Show {
     @OneToMany(mappedBy = "show")
     @JsonIgnore
     private List<Booking> bookings;
-
 }

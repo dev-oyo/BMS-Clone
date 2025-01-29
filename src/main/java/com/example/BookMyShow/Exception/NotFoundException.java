@@ -6,10 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-public class NotFoundException extends RuntimeException
-{
-    public NotFoundException(String message)
-    {
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String message) {
         super(message);
     }
     @Data
@@ -19,8 +17,7 @@ public class NotFoundException extends RuntimeException
         private final LocalDateTime timestamp = LocalDateTime.now();
         private int status;
         private String error;
-        public ErrorResponse(String message,int status)
-        {
+        public ErrorResponse(String message,int status) {
             this.error=message;
             this.status=status;
         }

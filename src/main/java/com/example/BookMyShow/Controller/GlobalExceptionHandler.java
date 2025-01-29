@@ -11,16 +11,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<NotFoundException.ErrorResponse> handleNotFoundException(NotFoundException e)
-    {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).
-                body(new NotFoundException.ErrorResponse(e.getMessage(),HttpStatus.NOT_FOUND.value()));
+    public ResponseEntity<NotFoundException.ErrorResponse> handleNotFoundException(NotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new NotFoundException.ErrorResponse(e.getMessage(),HttpStatus.NOT_FOUND.value()));
     }
 
     @ExceptionHandler(BadReqException.class)
-    public ResponseEntity<BadReqException.ErrorResponse> handleBadReqException(BadReqException e)
-    {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                body(new BadReqException.ErrorResponse(e.getMessage(),HttpStatus.BAD_REQUEST.value()));
+    public ResponseEntity<BadReqException.ErrorResponse> handleBadReqException(BadReqException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new BadReqException.ErrorResponse(e.getMessage(),HttpStatus.BAD_REQUEST.value()));
     }
 }
