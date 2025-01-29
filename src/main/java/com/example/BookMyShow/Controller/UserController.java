@@ -16,14 +16,14 @@ public class UserController {
     private UserService userServiceImpl;
 
     // Get Users
-    @GetMapping("getUsers")
+    @GetMapping("get")
     public Mono<List<UserDto>> getUsers() throws RuntimeException
     {
         return userServiceImpl.getAllUsers();
     }
 
     // Create a new user
-    @PostMapping("/addUser")
+    @PostMapping("/add")
     public Mono<UserDto> createUser(@RequestBody UserDto userEntity) throws RuntimeException
     {
         return userServiceImpl.createUser(userEntity);

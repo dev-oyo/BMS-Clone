@@ -20,7 +20,7 @@ public class BookingController {
     private BookingService bookingServiceImpl;
 
     // Create a new booking for a user
-    @PostMapping("/createBooking")
+    @PostMapping("/create")
     public ResponseEntity<?> createBooking(
             @RequestParam("user_id") String user_id,
             @RequestBody BookingDto bookingDto,
@@ -30,7 +30,7 @@ public class BookingController {
     }
 
     // Get bookings
-    @GetMapping("/getBookings")
+    @GetMapping("/get")
     public List<BookingResponse> getBookingsByUser(@RequestParam Map<String,String> allParams)
             throws NotFoundException, RuntimeException
     {

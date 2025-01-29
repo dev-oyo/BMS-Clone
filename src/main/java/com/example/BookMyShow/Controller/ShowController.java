@@ -16,14 +16,14 @@ public class ShowController {
     private ShowService showServiceImpl;
 
     // Get all Shows
-    @GetMapping("/getShows")
+    @GetMapping("/get")
     public List<ShowDto> getAllShows(@RequestParam("movie_id") String movie_id) throws RuntimeException
     {
         return showServiceImpl.getALlShows(movie_id);
     }
 
     // Add a Show
-    @PostMapping("/addShow")
+    @PostMapping("/add")
     public ShowDto addShow(@RequestParam("movie_id") String movie_id,@RequestBody ShowDto show) throws NotFoundException, RuntimeException
     {
         return showServiceImpl.addShow(movie_id,show);

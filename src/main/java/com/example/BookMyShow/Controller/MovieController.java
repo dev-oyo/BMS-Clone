@@ -16,14 +16,14 @@ public class MovieController {
     private MovieService movieServiceImpl;
 
     // Get Movies
-    @GetMapping("getMovies")
+    @GetMapping("get")
     public List<MovieDto> getMovies(@RequestParam("theatre_id") String Id) throws NotFoundException, RuntimeException
     {
         return movieServiceImpl.getAllMovies(Id);
     }
 
     // Add a Movie
-    @PostMapping("addMovie")
+    @PostMapping("add")
     public MovieDto addMovie(@RequestBody MovieDto movie, @RequestParam("theatre_id") String theatre_id) throws NotFoundException, RuntimeException
     {
         return movieServiceImpl.addMovie(movie,theatre_id);

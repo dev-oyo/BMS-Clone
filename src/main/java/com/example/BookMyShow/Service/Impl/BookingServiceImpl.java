@@ -87,6 +87,8 @@ public class BookingServiceImpl implements BookingService {
     public List<BookingResponse> getBookingsByUser(Map<String,String> allParams) throws NotFoundException, RuntimeException, BadReqException{
         try
         {
+            if(allParams.size()!=1)
+                throw new BadReqException("Invalid Input");
             List<BookingResponse> bookingResponseList = new ArrayList<>();
             if(allParams.get("user_id")!=null)
             {

@@ -52,15 +52,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
-//        return Mono.just(userDto)
-//                .map(this::convertToEntity)
-//                .flatMap(user -> {
-//                    UserEntity newUser = new UserEntity(user.getName(), user.getEmail(), user.getWalletBalance());
-//                    return userRepository.save(newUser);
-//                })
-//                .map(this::convertToDto);
-
     // Get User Details
     @Override
     public Mono<UserDto> getDetails(String userId)

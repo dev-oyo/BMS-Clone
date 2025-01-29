@@ -15,14 +15,14 @@ public class TheatreController {
     private TheatreService theatreServiceImpl;
 
     // Add a Theatre
-    @PostMapping("/addTheatre")
+    @PostMapping("/add")
     public TheatreDto addTheatre(@RequestBody TheatreDto theatre) throws RuntimeException
     {
         return theatreServiceImpl.addTheatre(theatre);
     }
 
     // Get Theatres
-    @GetMapping("/getTheatres")
+    @GetMapping("/get")
     public List<TheatreDto> getTheatres() throws RuntimeException
     {
         return theatreServiceImpl.getTheatres();
